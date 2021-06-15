@@ -1,5 +1,5 @@
 # STEMgames
-General description of the project (2 pts)
+General description of the project
 
 This application will create a semantic network for analysis of the hidden STEM (Science, Technology, Engineering, and Mathematics) curriculum in popular video games by showing how scientific concepts are often popularized in video games. 
 
@@ -44,33 +44,33 @@ The user will be able to save the output from the analysis for future reference.
 
 
 
-Technical "flow" (3 pts)
-Data collection
+#Technical "flow"
+##Data collection
 
 The first stage of this construction will require mostly manual work as the API requires the user to find all the ID numbers for the STEAM games. The games will be selected based on popularity in the last 10 years, and it will exclude games tagged as “educational games”, “learning games”, “maths”, “science”, etc. Once I have all the IDs, the API will create a document with all the reviews. 
 
-Language Processing
+##Language Processing
 
 Extract all sentences in which the scientific concept words are used. Identify the part of speech of the words and parse the sentences using a POS tagger. 
 Extract the context of each selected concept as it appeared in all the reviews. These are words which appear in close proximity of the concepts. For the context, we can select words we are interested in such as verbs or adjectives thus avoiding functional vocabulary. 
 Choose the most frequent context words and represent each word by the context words. This will allow us to create a matrix with concepts, context words, and games. 
 Create word clusters foro each concept to determine whether it is possible to derive categories of conceptualizations from the reviews. This will require the nltk.cluster function. 
 
-Network Analysis
+##Network Analysis
 
 Create the nodes for the analysis in NetworkX. At this point, I expect the scientific concepts to become the nodes. This may change to the games as nodes depending on the results of the natural language processing analysis. 
 Create edges. At this point, I expect these words to be the context words we found earlier as long as the game tags. 
 Import the data to NetworkX
 Create graph and add attributes for further analysis. 
 
-Visualization
+##Visualization
 Import data from NetworkX to Pyvis. 
 Get an interactive network.
 
-Deployment
+##Deployment
 Create a webapp using Streamlit
 
-Unknowns
+#Unknowns
 It is difficult to tell how the natural language processing will go. Maybe, I won’t find meaningful context clusters for the concepts, and I may need to change the strategy to find relevant data. In general, language processing always drops interesting data, but it may not be the data I was originally looking for. This means that the outcomes of the graph and visualizations may differ from my current expectations. 
 
 
