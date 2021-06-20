@@ -1,9 +1,8 @@
-Last Update: June 14
+Last Update: June 19
 #Reviews
-- Test the API with 10 games. 
-- Revise the 100 most downloaded games from STEAM and edit out any inconsistencies. Keep track of decisions on separate research .MD
-- Start compiling the files. 
-##Not done. Instead, I used Chris' suggestion and built a list of 1000 games from the STEAM store. 
+Modified the process using the steamreviews API. Files reviews.py and createIDlist.py are no longer needed. 
+Currently downloading reviews for over 100.000 games. Approximately, 1.1 million reviews. 
+Need to pickle the reviews into a single pkl. 
 
 #NLTK
 - Select the key STEM vocabulary to start tracking terms. Currently using NGSS standards big concepts following a LEXIMANCER analysis. 

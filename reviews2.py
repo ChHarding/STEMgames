@@ -1,3 +1,5 @@
+#this program is based on the GetAppList available on the Steam store. It allows me to create a pkl with all game reviews without having to create a list of ids first. 
+
 import pandas as pd
 import requests
 

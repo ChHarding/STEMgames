@@ -1,3 +1,6 @@
+#this file was created to output a list of id numbers for the steamreviews API which is no longer being used. I am still using the .csv file to keep track of the game names 
+#and corresponding ID numbers.
+
 # standard library imports
 import csv
 import datetime as dt
