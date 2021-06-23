@@ -44,7 +44,7 @@ for i, app_id in enumerate(app_ids):
 
 #pickling
 
-reviews_df = pd.DataFrame(reviews)[["appid", "review", "voted_up"]]
+reviews_df = pd.DataFrame(reviews)[["author", "review", "voted_up"]]
 reviews_df.dropna(inplace=True)
 reviews_df.reset_index(inplace=True)
 reviews_df
@@ -58,5 +58,3 @@ import numpy as np
 reviews_df = pd.read_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\rawreviews.pkl')
 reviews_df = reviews_df.sample(frac=1).reset_index(drop=True)
 
-for i, df in enumerate(np.array_split(reviews_df, 10)):
-    df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\rawreviews.pkl')
