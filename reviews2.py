@@ -1,11 +1,11 @@
 #this program is based on the GetAppList available on the Steam store. It allows me to create a pkl with all game reviews without having to create a list of ids first. 
-
+# The script is able to download the file but I cannot see the IDs. Tweaked code at the end to add appid. 
 import pandas as pd
 import requests
 
 response = requests.get(r'https://api.steampowered.com/ISteamApps/GetAppList/v2/')
 app_ids_df = pd.DataFrame(response.json()['applist']['apps'])
-app_ids_df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl.gz')
+app_ids_df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl')
 app_ids_df
 
 print(app_ids_df)
@@ -44,9 +44,7 @@ for i, app_id in enumerate(app_ids):
 
 #pickling
 
-len(reviews)
-
-reviews_df = pd.DataFrame(reviews)[['review', 'voted_up']]
+reviews_df = pd.DataFrame(reviews)[["appid", "review", "voted_up"]]
 reviews_df.dropna(inplace=True)
 reviews_df.reset_index(inplace=True)
 reviews_df
@@ -57,8 +55,8 @@ reviews_df.to_pickle('../data/reviews_raw.pkl.gz')
 
 
 import numpy as np
-reviews_df = pd.read_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl.gz')
+reviews_df = pd.read_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl')
 reviews_df = reviews_df.sample(frac=1).reset_index(drop=True)
 
 for i, df in enumerate(np.array_split(reviews_df, 10)):
-    df.to_pickle(f'../data/reviews_raw_{str(i)}.pkl.gz')
+    df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl')
