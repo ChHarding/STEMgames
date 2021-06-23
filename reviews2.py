@@ -51,12 +51,12 @@ reviews_df
 
 reviews_df.voted_up.value_counts(normalize=True)
 
-reviews_df.to_pickle('../data/reviews_raw.pkl.gz')
+reviews_df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\rawreviews.pkl')
 
 
 import numpy as np
-reviews_df = pd.read_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl')
+reviews_df = pd.read_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\rawreviews.pkl')
 reviews_df = reviews_df.sample(frac=1).reset_index(drop=True)
 
 for i, df in enumerate(np.array_split(reviews_df, 10)):
-    df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\apps_ids.pkl')
+    df.to_pickle(r'C:\Users\UTEC\Desktop\hci584\HCI584 - STEM games\STEMgames\rawreviews.pkl')
