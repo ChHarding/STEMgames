@@ -47,18 +47,20 @@ params = { # https://partner.steamgames.com/doc/store/getreviews
     'day_range' : 9223372036854775807, # shows reviews from all time
     'review_type' : 'all', # all, positive, negative
     'purchase_type' : 'all', # all, non_steam_purchase, steam
-    'num_per_page' : 50,
+    'num_per_page' : 100,
     'cursor' : '*'.encode()
 }
-
 
 app_dict = {}
 app_ids = (appids_list)
 for i, app_id in enumerate(app_ids):
-    l = get_reviews(app_id, params)['reviews']
+    l = get_reviews(app_id, params)["reviews"]
     app_dict[app_id] = l
 
-STEM_words  = ["game", "player", "scientific", "biological", "learning", "education", "historical"]
+ 
+
+
+STEM_words  = ["algorithm", "tuple", "theorem", "node", "query", "lemma", "database", "semantics", "packet", "kernel", "graph", "linear", "mapping", "spatial", "metric", "temporal", "partition", "calculus", "server", "binary"]
 #app_freq[123] = {"game":2, "player":3
 app_freq = {}
 scraped_apps = list(app_dict.keys())
@@ -77,7 +79,10 @@ for a in scraped_apps:
     app_freq[a] = d
 
 df = pd.DataFrame.from_dict(app_freq, orient="index")
-df.to_csv("PopularSTEMterms.csv")
+df.to_csv('technicalwords.csv') 
+
+
+
 
 
 

@@ -5,7 +5,7 @@ import requests
 #dark souls 570940
 #simcity 4 24780
 #mass effect 1328670
-"""
+
 response = requests.get(r'https://api.steampowered.com/ISteamApps/GetAppList/v2/')
 app_ids_df = pd.DataFrame(response.json()['applist']['apps'])
 app_ids_df.to_csv("apps_ids.csv")
@@ -17,7 +17,7 @@ app_ids = app_ids_df['appid'].to_numpy()
 app_ids, len(app_ids)
 
 #118188 games in the entire dataset. 
-"""
+
 #STEP 2. Get reviews. The reviews for the STEAM games are sorted by helpfulness. I only look at English reviews, both positive and negative. I select the 50 most helpful. 
 def get_reviews(appid, params): 
         url_start = 'https://store.steampowered.com/appreviews/'
@@ -39,7 +39,7 @@ params = { # https://partner.steamgames.com/doc/store/getreviews
     'num_per_page' : 50,
     'cursor' : '*'.encode()
           }
-app_ids = (24780, 570940, 1328670)
+app_ids = ()
 for i, app_id in enumerate(app_ids):
     reviews += get_reviews(app_id, params)['reviews']
     if (i+1)%500 == 0:
@@ -47,7 +47,7 @@ for i, app_id in enumerate(app_ids):
 
 #pickling
 
-reviews_df = pd.DataFrame(reviews)[["review", "voted_up"]]
+reviews_df = pd.DataFrame(reviews)[["reviews"]]
 reviews_df.dropna(inplace=True)
 reviews_df.reset_index(inplace=True)
 reviews_df
