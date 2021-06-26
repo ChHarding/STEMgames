@@ -3,12 +3,10 @@ import urllib
 import time
 from datetime import datetime
 from bs4 import BeautifulSoup
-import pandas as pd
-import requests
-import nltk 
-import pprint
-"""
-steampage = BeautifulSoup(urllib.request.urlopen('http://store.steampowered.com/stats/?l=english').read())
+
+
+#this chunk will use beautiful soup to get data from the STEAM website. It's not the API.
+steampage = BeautifulSoup(urllib.request.urlopen('http://store.steampowered.com/stats/?l=english').read,())
 
 timestamp = time.time()
 currentTime = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
@@ -23,13 +21,12 @@ for row in steampage('tr', {'class': 'player_count_row'}):
     
     top100CSV.write('{0},{1},"{2}","{3}","{4}"\n'.format(currentTime, steamAppID, steamGameName, currentConcurrent, maxConcurrent))
 
+#creates file with top 100 most played games. 
 top100CSV.close()
-"""
-column_names = ["Timestamp", "AppID", "Title", "Current_Players", "Peak_Players"]
-df = pd.read_csv("SteamTop100byTime.csv", names=column_names)
-appids_list = df.AppID.to_list()
-df.to_csv('top100appids.csv') 
 
+
+
+#this will define the function get_reviews which will use the request reviews function from the STEAM api. 
 def get_reviews(appid, params): 
         url_start = 'https://store.steampowered.com/appreviews/'
         try:
@@ -38,6 +35,8 @@ def get_reviews(appid, params):
                 return {'reviews' : []}
         return response.json() # return data extracted from the json response
 
+
+#this creates an empty list for reviews, the rest are parameters, it includes 100 reviews per game, sorted by helpfulness. 
 reviews = []
 cursor = '*'
 params = { # https://partner.steamgames.com/doc/store/getreviews
@@ -51,19 +50,26 @@ params = { # https://partner.steamgames.com/doc/store/getreviews
     'cursor' : '*'.encode()
 }
 
+#create a blank dictionary and calls the appids_list created in the second step. for each app id in the list of ids, it will get the reviews. The app_dict of each app_id is stored in L
+
 app_dict = {}
 app_ids = (appids_list)
 for i, app_id in enumerate(app_ids):
     l = get_reviews(app_id, params)["reviews"]
     app_dict[app_id] = l
 
- 
+#create a list of STEM words from a .txt file. The list is called STEM_words
+STEM_words = open('cswords.txt')
+all_the_lines = STEM_words.readlines()
+items = []
+for i in all_the_lines:
+    items.append(i)
 
 
-STEM_words  = ["algorithm", "tuple", "theorem", "node", "query", "lemma", "database", "semantics", "packet", "kernel", "graph", "linear", "mapping", "spatial", "metric", "temporal", "partition", "calculus", "server", "binary"]
-#app_freq[123] = {"game":2, "player":3
+#create a dictionary called app_freq which will tokenize all the words in the review and match them to the STEM_words list. 
 app_freq = {}
 scraped_apps = list(app_dict.keys())
+
 for a in scraped_apps:
     rl = app_dict[a]
     d = {sw:0 for sw in STEM_words}
@@ -77,6 +83,8 @@ for a in scraped_apps:
                 #print(a, i,"found", sw)
                 d[sw] = d[sw] + 1
     app_freq[a] = d
+
+#create a dataframe from the app_freq dictionary and save it as a CSV file.     
 
 df = pd.DataFrame.from_dict(app_freq, orient="index")
 df.to_csv('technicalwords.csv') 
